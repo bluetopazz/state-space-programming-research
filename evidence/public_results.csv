@@ -1,0 +1,10 @@
+evidence_id,family,measure,value,unit,disposition,disclosure_note
+semantic_cpp,business_v1,maximum_absolute_error,0.0000002384,state_units,supported,C++20 versus Python reference over tested rows
+mutation_catalog,business_v1,detected_perturbations,48,of_48,supported_bounded,Output-level structured perturbations rather than source-generated compiler mutations
+crossover_modes,synthetic_crossover,observed_winner_modes,4,of_4_eligible_modes,supported_local,Across 28 designed configurations on one Apple M1 Pro
+planner_selection,synthetic_crossover,held_out_oracle_selections,6,of_6,supported_secondary,Primary median-regret gate tied fixed MPS and is inconclusive
+planner_tail,synthetic_crossover,planner_p95_regret,0,fraction,supported_secondary,Fixed MPS p95 regret was 14.41 in the frozen six-case split
+hh_one_step,hodgkin_huxley_1952_v1,maximum_absolute_error,0.0000124,state_units,supported_bounded,Maximum across eligible non-reference backends
+hh_trajectory,hodgkin_huxley_1952_v1,maximum_error_after_500_steps,0.00000763,state_units,supported_bounded,Backend agreement for the chosen discretization
+hh_refinement,hodgkin_huxley_1952_v1,coarse_fine_final_difference,0.00769043,state_units,diagnostic,0.01 ms versus 0.005 ms after 10 ms; not an order study
+
