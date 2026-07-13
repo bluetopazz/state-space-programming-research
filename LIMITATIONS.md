@@ -1,5 +1,10 @@
 # Limitations
 
+- V3 is a preregistered research program, not a completed result.
+- No current evidence establishes exact source extraction, improved MPC, tighter reachability, cheaper intervention, or a favorable residual-burden frontier.
+- “Affine-plus-residual” does not imply that arbitrary systems are globally linear.
+- Formal reachability will be claimed only for mathematical cases that support it; nonlinear Kuramoto results remain empirical or locally bounded.
+
 - The current study covers three transition families; two are synthetic stressors.
 - The crossover grammar is intentionally constructed to expose changes in the fastest backend.
 - The held-out planner evaluation contains only six complete configurations.
@@ -13,4 +18,3 @@
 - Differential and trajectory tests provide sampled evidence, not a mathematical proof of equivalence.
 
 These boundaries are part of the result. The archive should not be presented as a finished compiler, a complete verification system, or a universal performance ranking.
-

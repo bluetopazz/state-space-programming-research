@@ -1,10 +1,21 @@
 # Methods and Evidence
 
+## Research layers
+
+SSPM now separates two evidence layers:
+
+- **V1/V2 evidence:** family identity, sampled differential validation, trajectory checks, transfer-aware measurement, and feature-aware backend selection.
+- **V3 research cycle:** extraction into an affine core plus ordered residual, generated execution, operator-level control and analysis, and a residual-burden falsification frontier.
+
+The V1/V2 results remain fixed. They support the discipline around semantics and execution but do not count as evidence that the V3 representation improves MPC, reachability, intervention, or composition.
+
 ## Unit of analysis
 
 SSPM studies fixed-width, batched numerical transitions. A transition family defines the meaning of a row, the names and units of state fields, admissible input structure, update ordering, coupling semantics, numerical bounds, dtype, and an executable reference.
 
-The current implementation uses schema fingerprints and sampled numerical comparisons. Metadata alone does not prove functional identity, and the present runtime does not yet enforce every declared field bound or kind. Public claims therefore distinguish structural identity from empirical semantic agreement.
+The V3 representation introduces an `AffineResidualProgram` containing typed state and input schemas, $A$, $B$, $b$, ordered residual IR, projection, mode predicates, coupling, and provenance. A restricted source compiler must extract supported affine terms exactly and explicitly reject unsupported effects.
+
+The current V1/V2 implementation uses schema fingerprints and sampled numerical comparisons. Metadata alone does not prove functional identity, and the present runtime does not yet enforce every declared field bound or kind. Public claims therefore distinguish existing evidence from preregistered V3 objectives.
 
 ## Evidence sequence
 
@@ -48,4 +59,3 @@ This establishes cross-backend agreement for the chosen discretization. It does 
 ## Hardware boundary
 
 All published performance observations come from one Apple M1 Pro environment. MPS, NumPy, Numba, and Torch results are local measurements. CUDA, Triton, x86, energy, memory counters, and multi-node execution are not measured in this archive.
-

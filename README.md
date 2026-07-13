@@ -1,29 +1,43 @@
 # State-Space Programming Research
 
-> A public research archive on semantic validation and heterogeneous execution for batched state-transition programs.
+> A public research archive on matrix-executable system semantics for batched control and analysis.
 
-State-Space Programming Methodology (SSPM) studies a recurring systems problem: the same numerical update can be expressed as scalar code, array operations, compiled loops, tensor programs, or accelerator kernels, but timing those versions is meaningful only when they preserve the same transition and expose comparable movement costs.
+State-Space Programming Methodology (SSPM) asks whether traditional update programs can be represented as an explicit affine core plus an ordered residual:
+
+$$
+L_t=S_tA^\top+U_tB^\top+b,
+$$
+
+$$
+S_{t+1}=P_{\mathcal M}\left(L_t+H_{\mathrm{ordered}}(S_t,U_t,L_t)\right).
+$$
+
+The affine core exposes direct system operators. The residual preserves nonlinear expressions, branches, updated-state reads, masks, graph reductions, projection, and mode logic that cannot be moved into the matrix terms without changing semantics.
+
+The flagship question is whether this representation preserves traditional update behavior while enabling faster and more direct model-predictive control, reachability, intervention, composition, and batched scenario analysis. Heterogeneous execution and backend selection remain supporting infrastructure rather than the principal contribution.
 
 The project starts from one rule:
 
 > **No semantic equivalence, no speedup claim.**
 
-SSPM represents a bounded program family as
-
-$$
-S_{t+1}=F(S_t,U_t,G_t,\Theta),
-$$
-
-where rows are entities, columns are named state variables, $U_t$ contains controls, and optional $G_t$ introduces coupling. A transition-family record identifies the state schema, inputs, update convention, numerical bounds, coupling class, and executable reference before an alternative backend enters measurement.
-
 ## What the research asks
 
-1. Can explicit transition-family records make cross-backend comparisons more trustworthy?
-2. Which workload features cause the fastest backend to change?
-3. Can a small feature-aware planner select among CPU and accelerator paths without hiding transfer and residency?
-4. Does the method transfer from synthetic stressors to a source-grounded nonlinear scientific model?
+1. Which traditional update programs can be extracted exactly into an affine core plus ordered residual IR?
+2. Does the representation preserve one-step, trajectory, mode, and event semantics across object, loop, vectorized, and generated forms?
+3. Do explicit operators improve batched intervention, MPC, composition, and reachability without hiding approximation or constraint violations?
+4. Where does increasing residual density, branch entropy, graph coupling, or updated-state dependence erase the benefit?
 
-## Current evidence
+## V3 research program
+
+The separately frozen [V3 preregistration](research/preregistration_v3.md) uses a three-level workload ladder:
+
+1. an exact LTI mass-spring-damper or double-integrator system;
+2. a piecewise-affine bounded queue and scheduler;
+3. a controlled Kuramoto graph with nonlinear coupling isolated in the residual.
+
+It evaluates representability, semantic preservation, representation ablations, dynamic intervention, MPC, reachability, the residual-burden frontier, and hardware portability. Unsupported mutation, I/O, aliasing, loops, and side effects must be rejected rather than silently approximated.
+
+## Prior evidence: v1/v2
 
 - Independent implementations agree numerically over the tested domains, including a portable C++ path for one family.
 - A bounded catalog of 48 output-level semantic perturbations is detected by directed differential cases. This is a sensitivity result, not compiler verification.
@@ -31,12 +45,13 @@ where rows are entities, columns are named state variables, $U_t$ contains contr
 - A feature-aware planner selects the winner on six held-out configurations, but its preregistered median-regret gate ties a fixed MPS policy and is therefore **inconclusive**.
 - A Hodgkin-Huxley transition using canonical 1952 parameters preserves one-step and 500-step behavior across NumPy, fused Numba, Torch CPU, and Torch MPS within declared tolerances.
 
-These results support a research method and a systems direction. They do not establish a universal compiler, formal equivalence, biological validation, or hardware-independent runtime superiority.
+These results remain published unchanged as supporting evidence for semantic discipline and heterogeneous execution. They do not yet validate the V3 compiler, control operators, reachability methods, or residual-burden claim.
 
 ## Read the archive
 
-- [Simplified research report](papers/state-space-programming-methodology.pdf)
-- [Report source](papers/STATE_SPACE_PROGRAMMING_METHODOLOGY.md)
+- [V3 preregistration: Matrix-Executable System Representation](research/preregistration_v3.md)
+- [V1/V2 evidence report](papers/state-space-programming-methodology.pdf)
+- [V1/V2 report source](papers/STATE_SPACE_PROGRAMMING_METHODOLOGY.md)
 - [Methods and evidence](METHODS_AND_EVIDENCE.md)
 - [Evidence ledger](EVIDENCE_LEDGER.md)
 - [Limitations](LIMITATIONS.md)
@@ -50,11 +65,10 @@ The executable workbench remains a separate engineering artifact. This archive i
 
 ## Status
 
-`public research archive / v1.0 / July 2026`
+`public research archive / v1.1 / July 2026`
 
-SSPM is an active research direction. The next credible gates are generated source-level mutations, enforced field contracts, broader held-out evaluation, independent measurement sessions, additional grounded transition families, and replication on x86 and CUDA-class hardware.
+V3 is preregistered but not yet evidenced. Its acceptance gates must be evaluated before the planned report, *Matrix-Executable System Semantics for Batched Control and Analysis*, is presented as a result.
 
 ## License and contact
 
 Original text, figures, and aggregate evidence are licensed under [CC BY-NC 4.0](LICENSE.md). Research inquiries and collaboration proposals can be sent through [Ronnie's Lab](https://ronnieslab.com/#contact).
-

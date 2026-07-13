@@ -1,5 +1,17 @@
 # Evidence Ledger
 
+## V3 claim boundary
+
+| Proposed claim | Current disposition | Required evidence |
+|---|---|---|
+| Supported traditional updates can be extracted exactly into affine terms plus ordered residual IR | Preregistered; not yet established | Frozen corpus, extraction metrics, one-step and trajectory agreement, explicit rejection tests |
+| Matrix-executable operators make batched intervention materially cheaper | Preregistered; not yet established | Identical interventions at 1, 32, 256, and 2,048 scenarios with setup, rollout, allocation, and break-even measurements |
+| SSPM supports equivalent MPC objectives and constraints | Preregistered; not yet established | Candidate-control objective agreement and no additional constraint violations across the workload ladder |
+| SSPM supports useful reachability analysis | Preregistered; scope-dependent | Exact LTI sets, branch-aware queue over-approximation, empirical or local Kuramoto bounds, containment validation |
+| Affine coverage predicts when matrix execution remains useful | Preregistered falsification target | Residual-density, branch-entropy, graph-coupling, and updated-state frontier with an execution/analysis phase diagram |
+
+## Published v1/v2 evidence
+
 | Public claim | Disposition | Public evidence | Limitation |
 |---|---|---|---|
 | A family-aware gate can detect cross-backend numerical disagreement | Supported over tested samples | Field-level one-step comparisons and bounded trajectories | Empirical testing is not formal equivalence |
@@ -13,5 +25,4 @@
 
 ## Source of record
 
-The public values were derived from frozen machine-readable artifacts in the private/full engineering workbench. This archive publishes aggregate values only. The report preserves negative and inconclusive results rather than selecting only favorable measurements.
-
+The published values were derived from frozen machine-readable v1/v2 artifacts in the private/full engineering workbench. This archive publishes aggregate values only. No v3 result is currently included in `evidence/public_results.csv`.
