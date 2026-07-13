@@ -1,6 +1,9 @@
 # Public Evidence
 
-`public_results.csv` contains the small aggregate evidence surface used by the public report. It excludes raw configuration timing, machine paths, private notebooks, and implementation details.
+public_results.csv is the sanitized aggregate surface for the completed V3 and
+Serving V1 cycles. It excludes raw repetitions, source code, machine paths,
+private manifests, and implementation details.
 
-The values are descriptive observations from a frozen July 2026 run on one Apple M1 Pro. They are not universal hardware rankings.
-
+Performance values are descriptive observations from local Apple Silicon runs.
+Ratios name both numerator and denominator so they cannot be read as universal
+speedups. Negative vectorized-baseline results are included.

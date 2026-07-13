@@ -4,6 +4,13 @@
 **Archive date:** July 12, 2026  
 **Planned report:** *Matrix-Executable System Semantics for Batched Control and Analysis*
 
+> **Archival disposition, July 13, 2026.** This document preserves the original
+> pre-experiment hypotheses and wording. The experiments are now complete. They
+> support a bounded resident-state representation and intervention claim, not
+> arbitrary-system linearization or universal kernel speed. See
+> [the canonical claim](../CLAIM.md), [completed evidence](../METHODS_AND_EVIDENCE.md),
+> and [claim ledger](../EVIDENCE_LEDGER.md) for the current disposition.
+
 ## 1. Research position
 
 SSPM V3 proposes that arbitrary system updates can be modeled as transformations over a resident state matrix, with irreducible nonlinear and ordered behavior isolated explicitly. For state matrix $S_t$, controls $U_t$, affine operators $A$ and $B$, bias $b$, and ordered residual program $H_{\mathrm{ordered}}$:

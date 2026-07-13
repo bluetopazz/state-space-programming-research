@@ -1,61 +1,82 @@
-# Methods and Evidence
+# Methods and Completed Evidence
 
-## Research layers
+## Representation
 
-SSPM now separates two evidence layers:
+The executable research workbench defines an AffineResidualProgram containing
+typed state and input schemas, affine operators A, B, and b, an ordered residual,
+projection and mode logic, coupling metadata, and provenance. A restricted
+source compiler extracts supported affine terms and rejects hidden mutation,
+I/O, ambiguous aliasing, loops, and unsupported side effects rather than
+silently approximating them.
 
-- **V1/V2 evidence:** family identity, sampled differential validation, trajectory checks, transfer-aware measurement, and feature-aware backend selection.
-- **V3 research cycle:** resident matrix state, extraction into an affine core plus ordered residual, target-variable manipulation, generated execution, operator-level control and analysis, and a residual-burden falsification frontier.
+The same representation exposes rollout, composition, batched intervention,
+local linearization, controllability, reachability, and model-predictive control
+operations. Exact analytical claims are restricted to exact affine programs.
 
-The V1/V2 results remain fixed. They support the discipline around semantics and execution but do not count as evidence that the V3 representation improves MPC, reachability, intervention, or composition.
+## Workload ladder
 
-## Unit of analysis
+| Family | Role | Affine coverage | Analysis boundary |
+| --- | --- | ---: | --- |
+| Double integrator | Exact LTI reference | 100% | Exact composition, MPC, and zonotope reachability |
+| Bounded queue/scheduler | Piecewise-affine infrastructure system | 55.2% | Scenario MPC and conservative branch-aware reachability |
+| Controlled Kuramoto | Nonlinear graph system | 37.5% | Shooting MPC and local/empirical reachability only |
+| Fluid serving scheduler | Source-informed infrastructure application | Residual-heavy | Counterfactual replay; not hardware-calibrated serving |
 
-SSPM studies fixed-width, batched numerical transitions. A transition family defines the meaning of a row, the names and units of state fields, admissible input structure, update ordering, coupling semantics, numerical bounds, dtype, and an executable reference.
+## Semantic gates
 
-The V3 representation introduces an `AffineResidualProgram` containing typed state and input schemas, resident state layout, $A$, $B$, $b$, ordered residual IR, projection, mode predicates, coupling, and provenance. A restricted source compiler must extract supported affine terms exactly and explicitly reject unsupported effects. Intervention experiments must distinguish updating resident state or operators from reconstructing traditional object and event models.
+The frozen V3 corpus compares object, scalar-loop, manual NumPy, fused Numba,
+event, and SSPM trajectories under identical initial states, controls, traces,
+horizons, precision, and output boundaries. All tested trajectories agreed
+within declared tolerances. Six mutation classes - coefficient, dependency,
+ordering, threshold, projection, and mode - achieved 100% detection. Generated
+exact-affine NumPy, Numba, Torch CPU, and C++20 paths agreed within maximum error
+2.14e-14.
 
-The current V1/V2 implementation uses schema fingerprints and sampled numerical comparisons. Metadata alone does not prove functional identity, and the present runtime does not yet enforce every declared field bound or kind. Public claims therefore distinguish existing evidence from preregistered V3 objectives.
+These are bounded differential results. They do not prove arbitrary source
+program equivalence.
 
-## Evidence sequence
+## Intervention and execution results
 
-1. **Declare the family.** Freeze the schema, reference transition, update convention, and measurement boundary.
-2. **Admit a backend.** Require matching family identity and compare its output against the reference over sampled cases.
-3. **Check trajectories.** Repeat the transition to expose accumulated drift that may be invisible after one step.
-4. **Measure phases.** Separate preparation, transfer, resident execution, return, and end-to-end latency where the backend permits it.
-5. **Evaluate selection.** Split complete workload configurations before fitting and report regret against the observed fastest eligible backend.
+At 2,048 scenarios and horizon 20, SSPM was between 6.9x and 63.8x faster than
+object/scalar baselines, and 13.9x faster than the equivalent queue-event
+baseline. Resident intervention crossed reconstruction-heavy baselines at 256
+scenarios for every LTI and queue horizon tested.
 
-## Transition families
+The stronger kernel claim failed. At the same scale, manual NumPy was roughly
+8.3x faster than SSPM for LTI and 7.6x faster for queue; fused Numba was roughly
+68.0x and 44.6x faster. Across 50 residual-frontier configurations, resident
+SSPM won none against the equivalent manual-vectorized update.
 
-| Family | Role | Evidence boundary |
-|---|---|---|
-| Synthetic business transition | Exercises ordered dependencies, thresholds, projections, and updated intermediates | Semantic and execution stressor only |
-| Synthetic thermal-control transition | Adds a different nonlinear state shape and control pattern | Not a calibrated physical model |
-| Hodgkin-Huxley 1952 transition | Tests portability to a literature-grounded nonlinear system | Backend agreement and step refinement, not biological validation |
+## Serving study
 
-## Crossover experiment
+A separately frozen cycle represented a source-informed fluid scheduler with
+prefill/decode backlog, KV occupancy, admission, completion, drops, and
+accumulated latency work. Across two process sessions and 5,280 retained timing
+samples:
 
-The frozen experiment contains 28 complete configurations varying row count, state width, horizon, host or resident input state, active-mask density, and graph degree. A stable hash assigns 22 configurations to calibration and six to held-out evaluation. NumPy CPU, fused Numba CPU, Torch CPU, and MPS execution modes are compared where eligible.
+- one-step and 50-step semantic agreement passed with zero observed error;
+- object reconstruction / affine-residual replay was 36.17x at the median for
+  256 or more scenarios;
+- object reconstruction / resident intervention replay was 34.72x at the
+  median, ranging from 24.29x to 54.34x;
+- manual vectorization beat generic affine-residual and resident replay in every
+  measured cell.
 
-The experiment preregistered two distinct gates:
+The model is source-informed but not calibrated to vLLM, model kernels,
+production traces, TTFT, TPOT, or SLO distributions.
 
-- **Crossover gate:** at least two execution modes must become observed winners.
-- **Planner primary gate:** planner median regret must be strictly lower than the best fixed eligible policy.
+## Control and reachability
 
-The crossover gate passes with four observed winner modes. The planner selects all six held-out winners, but the primary gate does not pass because planner and fixed MPS median regret both equal zero. Tail regret favors the planner, but it remains a secondary result.
+Exact condensed LTI MPC, 512-candidate queue scenario MPC, and 256-candidate
+Kuramoto shooting MPC selected equivalent policies and objectives across
+traditional and SSPM execution, with no additional constraint violations.
+Exact LTI zonotopes and conservative queue intervals contained every tested
+trajectory. Kuramoto enclosures are explicitly local or empirical, not formal.
 
-## Mutation sensitivity
+## Reproducibility boundary
 
-The public result covers 48 structured perturbations across coefficient, dependency, sign, omission, threshold, ordering, and projection categories. Directed test cases detect all 48.
-
-Most operators perturb the result of a known reference transition at declared semantic sites. They are therefore evidence that the sampled test domain notices these output-level faults. They are not automatically generated source or compiler mutations, and the result must not be interpreted as proof that arbitrary lowering defects will be detected.
-
-## Scientific-family check
-
-The Hodgkin-Huxley family uses canonical squid giant-axon conductances and a forward-Euler step. NumPy, fused Numba, Torch CPU, and Torch MPS agree within declared one-step and 500-step tolerances. A half-step comparison supplies a limited numerical-refinement diagnostic.
-
-This establishes cross-backend agreement for the chosen discretization. It does not establish biological accuracy, solver optimality, or stability for arbitrary stimuli and horizons.
-
-## Hardware boundary
-
-All published performance observations come from one Apple M1 Pro environment. MPS, NumPy, Numba, and Torch results are local measurements. CUDA, Triton, x86, energy, memory counters, and multi-node execution are not measured in this archive.
+The private executable source of record retains raw repetitions, deterministic
+seeds, source checksums, controls, solver settings, package versions, and
+machine manifests. This public archive exposes only aggregate, non-sensitive
+evidence and the frozen V3 protocol. No result should be generalized beyond the
+declared workloads and local hardware.

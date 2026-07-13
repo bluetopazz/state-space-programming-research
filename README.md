@@ -1,80 +1,87 @@
-# State-Space Programming Research
+# SSPM: Resident Matrix Systems
 
-> A public research archive on matrix-executable system semantics for batched control and analysis.
+**A public research archive for a matrix-executable approach to system state,
+intervention, and counterfactual analysis.**
 
-State-Space Programming Methodology (SSPM) proposes that arbitrary system updates can be approached as transformations over a resident state matrix. The primary representation is an explicit affine core plus an ordered residual:
+State-Space Programming Methodology (SSPM) investigates a bounded class of
+dynamical programs whose typed state can remain resident in matrices while the
+transition is separated into reusable affine structure and explicit nonlinear
+closure:
 
-$$
-L_t=S_tA^\top+U_tB^\top+b,
-$$
+~~~math
+L_t = S_t A^T + U_t B^T + b,
+\qquad
+S_{t+1} = P_M\left(L_t + H_{ordered}(S_t,U_t,L_t,G_t)\right).
+~~~
 
-$$
-S_{t+1}=P_{\mathcal M}\left(L_t+H_{\mathrm{ordered}}(S_t,U_t,L_t)\right).
-$$
+The base claim is operational:
 
-The state remains resident as a matrix. An intervention changes a target state variable, control, parameter, constraint, or operator entry, then propagates the consequences through the shared transformation rather than rebuilding a collection of objects or events. Many candidate interventions can be stacked and evaluated as batched matrices.
+> When state and reusable dependencies remain resident, a target change can be
+> expressed as a state, input, constraint, or operator edit and propagated
+> across many candidate scenarios without rebuilding an object or event model
+> for each intervention.
 
-The affine core exposes direct system operators. The residual preserves nonlinear expressions, branches, updated-state reads, masks, graph reductions, projection, and mode logic that cannot be moved into the matrix terms without changing semantics.
+This is not a claim that arbitrary nonlinear systems are globally linear. The
+ordered residual retains nonlinearities, branches, graph coupling, and mode
+logic. The useful region is where semantic equivalence holds, reusable structure
+remains substantial, and intervention or analysis cost improves before residual
+burden dominates.
 
-The flagship hypothesis is that a linear-primary representation of system state can preserve traditional update behavior while enabling faster and more dynamic manipulation: intervention, propagation, model-predictive control, reachability, composition, and batched scenario analysis. Heterogeneous execution and backend selection remain supporting infrastructure rather than the principal contribution.
+## Current evidence
 
-“Arbitrary system” is a research proposal, not a current theorem. With an unrestricted residual, any update can be decomposed trivially; the nontrivial claim is that real systems retain enough affine structure for resident matrix manipulation to provide analytical and computational leverage before residual burden dominates.
+The completed V3 and Serving V1 cycles support a bounded representation and
+intervention claim:
 
-The project starts from one rule:
+- exact agreement was maintained across the frozen LTI, bounded-queue, and
+  controlled-Kuramoto workloads;
+- affine coverage was 100% for LTI, 55.2% for the queue, and 37.5% for Kuramoto;
+- SSPM exceeded reconstruction-heavy object, scalar, and equivalent event
+  baselines at large scenario counts;
+- resident intervention crossed the reconstruction baseline at 256 scenarios
+  for every LTI and queue horizon tested;
+- a source-informed serving model showed a 34.72x median advantage over object
+  reconstruction for intervention replay;
+- manual vectorization and fused Numba remained faster in residual-heavy
+  workloads.
 
-> **No semantic equivalence, no speedup claim.**
-
-## What the research asks
-
-1. Can arbitrary traditional system updates be represented as a linear-primary transformation over resident state, with all irreducible behavior isolated explicitly in an ordered residual?
-2. Does changing one target variable, control, or operator and propagating the transformation preserve the behavior of the traditional system model?
-3. Does resident matrix state make many interventions, MPC candidates, compositions, and reachability queries faster and more dynamically reconfigurable than rebuilding object or event systems?
-4. Where does increasing residual density, branch entropy, graph coupling, or updated-state dependence erase that advantage?
-
-## V3 research program
-
-The separately frozen [V3 preregistration](research/preregistration_v3.md) uses a three-level workload ladder:
-
-1. an exact LTI mass-spring-damper or double-integrator system;
-2. a piecewise-affine bounded queue and scheduler;
-3. a controlled Kuramoto graph with nonlinear coupling isolated in the residual.
-
-It evaluates representability, semantic preservation, representation ablations, dynamic intervention, MPC, reachability, the residual-burden frontier, and hardware portability. Unsupported mutation, I/O, aliasing, loops, and side effects must be rejected rather than silently approximated.
-
-## Prior evidence: v1/v2
-
-- Independent implementations agree numerically over the tested domains, including a portable C++ path for one family.
-- A bounded catalog of 48 output-level semantic perturbations is detected by directed differential cases. This is a sensitivity result, not compiler verification.
-- Across 28 synthetic crossover configurations, four execution modes become the observed winner at least once.
-- A feature-aware planner selects the winner on six held-out configurations, but its preregistered median-regret gate ties a fixed MPS policy and is therefore **inconclusive**.
-- A Hodgkin-Huxley transition using canonical 1952 parameters preserves one-step and 500-step behavior across NumPy, fused Numba, Torch CPU, and Torch MPS within declared tolerances.
-
-These results remain published unchanged as supporting evidence for semantic discipline and heterogeneous execution. They do not yet validate the V3 compiler, control operators, reachability methods, or residual-burden claim.
+The conclusion is intentionally bounded: SSPM is presently supported as a
+representation and analysis method, not as a universally faster numerical
+kernel.
 
 ## Read the archive
 
-- [Short paper: Matrix-Executable System Semantics](papers/resident-matrix-systems.pdf)
-- [Short paper source](papers/RESIDENT_MATRIX_SYSTEMS.md)
-- [V3 preregistration: Matrix-Executable System Representation](research/preregistration_v3.md)
-- [V1/V2 evidence report](papers/state-space-programming-methodology.pdf)
-- [V1/V2 report source](papers/STATE_SPACE_PROGRAMMING_METHODOLOGY.md)
-- [Methods and evidence](METHODS_AND_EVIDENCE.md)
-- [Evidence ledger](EVIDENCE_LEDGER.md)
-- [Limitations](LIMITATIONS.md)
-- [Public aggregate evidence](evidence/public_results.csv)
+- [Short paper: Resident State as an Executable System Representation](papers/resident-matrix-systems.pdf)
+- [Paper source](papers/RESIDENT_MATRIX_SYSTEMS.md)
+- [Canonical claim and boundaries](CLAIM.md)
+- [Methods and completed evidence](METHODS_AND_EVIDENCE.md)
+- [Claim-by-claim evidence ledger](EVIDENCE_LEDGER.md)
+- [Limitations and open questions](LIMITATIONS.md)
+- [Frozen V3 preregistration](research/preregistration_v3.md)
+- [Sanitized aggregate results](evidence/public_results.csv)
+
+## Figure atlas
+
+- [Affine coverage across the workload ladder](figures/representation-coverage.png)
+- [Resident intervention break-even](figures/intervention-break-even.png)
+- [Residual-burden frontier](figures/residual-frontier.png)
+- [Serving intervention comparison](figures/serving-interventions.png)
 
 ## Archive boundary
 
-This repository contains research writing, selected figures, and aggregate evidence only. It intentionally excludes implementation code, private notebooks, raw benchmark observations, environment-specific paths, and operational development history.
-
-The executable workbench remains a separate engineering artifact. This archive is the stable public explanation of the research direction.
+This repository publishes research writing, figures, preregistration, and
+sanitized aggregate evidence. It does not publish the executable workbench, raw
+timing traces, private machine paths, or application code. The private source of
+record retains raw samples, seeds, checksums, manifests, and implementation
+tests.
 
 ## Status
 
-`public research archive / v1.3 / July 2026`
+Public research archive, version 2.0, July 2026.
 
-V3 is preregistered but not yet evidenced. Its acceptance gates must be evaluated before the planned report, *Matrix-Executable System Semantics for Batched Control and Analysis*, is presented as a result.
+Completed locally on Apple Silicon. CUDA, Triton, x86, and dual-A6000
+replication remain unmeasured.
 
-## License and contact
+## License
 
-Original text, figures, and aggregate evidence are licensed under [CC BY-NC 4.0](LICENSE.md). Research inquiries and collaboration proposals can be sent through [Ronnie's Lab](https://ronnieslab.com/#contact).
+Documentation, figures, and sanitized data are released under
+[CC BY-NC 4.0](LICENSE.md).

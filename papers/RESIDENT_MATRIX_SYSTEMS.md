@@ -1,6 +1,6 @@
 ---
-title: "Matrix-Executable System Semantics"
-subtitle: "A resident-matrix proposal for batched control and analysis"
+title: "Resident State as an Executable System Representation"
+subtitle: "A bounded result for intervention, control, and scenario analysis"
 author: "Ronnie Mack - Ronnie's Lab"
 date: "July 2026"
 lang: en-US
@@ -9,77 +9,128 @@ toc: false
 
 # Abstract
 
-State-Space Programming Methodology (SSPM) asks whether a broad class of systems can be represented as transformations over a **resident state matrix** rather than repeatedly reconstructed as collections of objects, events, or solver-specific structures. Its proposed representation separates an explicit affine core from the nonlinear and order-sensitive behavior required to preserve the original update:
+State-Space Programming Methodology (SSPM) studies whether bounded dynamical
+programs can be represented as transformations over **resident matrix state**
+rather than rebuilt as objects, events, or solver-specific structures for each
+intervention. Its representation separates reusable affine structure from the
+nonlinear and order-sensitive behavior required to preserve the original
+transition:
 
 $$
 L_t=S_tA^\top+U_tB^\top+b,
 \qquad
-S_{t+1}=P_{\mathcal M}\!\left(L_t+H_{\mathrm{ordered}}(S_t,U_t,L_t)\right).
+S_{t+1}=P_M\!\left(L_t+H_{ordered}(S_t,U_t,L_t,G_t)\right).
 $$
 
-The central hypothesis is computational and operational, not merely notational. If the system state stays resident, an intervention can alter a target state, control, constraint, or operator entry and propagate its effects through shared transformations. Many alternatives can then be stacked as matrices and evaluated together. This may make model-predictive control, reachability, composition, and scenario analysis faster and more dynamically reconfigurable than rebuilding traditional system representations. An unrestricted residual makes the decomposition trivial, however. The useful claim therefore depends on sufficient affine coverage, exact semantic preservation, and a measurable advantage before residual burden dominates.
+The completed V3 and Serving V1 cycles support a bounded claim: resident state
+makes large counterfactual batches and target edits direct when the alternative
+reconstructs object or event models. They reject a stronger claim that matrix
+representation alone creates the fastest numerical kernel. Manual vectorization
+and fused execution remain faster for residual-heavy transitions.
 
-# 1. The proposal
+# 1. The claim
 
-Let $S_t\in\mathbb R^{N\times d}$ contain the named state of $N$ entities and let $U_t\in\mathbb R^{N\times k}$ contain controls or exogenous inputs. SSPM treats the update as a linear-primary program with three declared layers:
+Let $S_t\in\mathbb R^{N\times d}$ contain typed state, with rows representing
+entities or independent scenarios, and let $U_t$ contain controls or exogenous
+inputs. SSPM makes state and transition operators first-class executable
+objects. $A$, $B$, and $b$ expose reusable affine dependencies;
+$H_{ordered}$ preserves nonlinear expressions, branches, updated-state reads,
+masks, and graph reductions; $P_M$ applies declared projection and mode logic.
 
-1. **Affine propagation.** Matrices $A$ and $B$ and offset $b$ expose the portion of the transition that can be composed, differentiated, batched, and analyzed directly.
-2. **Ordered residual.** $H_{\mathrm{ordered}}$ retains nonlinear expressions, branches, updated-state reads, masks, and graph reductions that cannot be moved into the affine terms without changing behavior.
-3. **Projection and modes.** $P_{\mathcal M}$ applies bounds, discrete modes, and admissibility rules explicitly rather than hiding them in backend code.
+An intervention modifies a target state, control, capacity, constraint, or
+operator while the shared system representation remains resident. Candidate
+alternatives can be stacked as rows and propagated together. The intended
+benefit is reduced reconstruction and a common surface for rollout,
+composition, intervention, linearization, controllability, reachability, and
+model-predictive control.
 
-For $Q$ candidate interventions, SSPM forms a scenario batch
+This is not universal linearization. Exact finite-dimensional linear
+representations of general nonlinear dynamics are uncommon [1]. An unrestricted
+residual can always absorb the transition, but then the decomposition offers no
+leverage. A useful result requires semantic preservation, enough reusable
+structure, and lower manipulation cost before residual burden dominates.
 
-$$
-\mathcal S_t=
-\begin{bmatrix}
-S_t+\Delta S_t^{(1)}\\
-\vdots\\
-S_t+\Delta S_t^{(Q)}
-\end{bmatrix},
-$$
+# 2. Completed experiment program
 
-then propagates shared operators across the batch. The expected gain is not that matrix multiplication makes every nonlinear system linear. It is that common structure remains resident and reusable while target changes are represented as deltas. The implementation can avoid repeated object construction, event-graph rebuilding, parsing, allocation, and host-device movement. The same representation can also expose exact composition and controllability for affine systems, branch-aware analysis for piecewise-affine systems, and local or empirical analysis for nonlinear residual systems.
+The frozen V3 workload ladder contains an exact double integrator, a
+piecewise-affine bounded queue and scheduler, and a controlled Kuramoto graph
+with nonlinear coupling in the residual. Traditional object, scalar, manual
+NumPy, fused Numba, equivalent event, and SSPM forms receive identical states,
+controls, traces, horizons, precision, and materialization boundaries.
 
-This direction is adjacent to Koopman methods, which evolve observables through a linear operator and can support linear predictive control in lifted coordinates [1,2]. SSPM differs in emphasis: it begins from typed update-program semantics, retains an explicit ordered residual, and tests resident intervention economics across traditional, vectorized, fused, and accelerator implementations. Prior work also establishes an important boundary: exact finite-dimensional linear representations containing the original state are uncommon for general nonlinear dynamics [1]. SSPM therefore proposes a testable representation strategy, not universal finite-dimensional linearization.
+The restricted source compiler extracts affine terms and explicitly rejects
+hidden mutation, I/O, ambiguous aliasing, loops, and unsupported effects.
+Differential tests cover one-step and trajectory behavior. Mutation tests alter
+coefficients, dependencies, ordering, thresholds, projections, and modes.
+Control and reachability claims are workload-specific: exact for affine LTI,
+conservative for the queue, and local or empirical for Kuramoto.
 
-# 2. What exists now
+A separate Serving V1 cycle models prefill/decode backlog, KV occupancy,
+admission, completion, drops, and accumulated latency work in a source-informed
+fluid scheduler. It tests whether resident state helps evaluate large batches of
+capacity, workload, and initial-state interventions. It is not a calibrated
+inference-engine simulator.
 
-The completed V1/V2 research cycle supplies a semantic and execution substrate for this proposal. It defines typed state and input contracts, finite-value and bound checks, update-order declarations, a restricted transition IR, and generated NumPy, Numba, Torch, and C++ execution paths. Grounded bounded-queue and controlled-Kuramoto families test branching, graph coupling, projection, and nonlinear updates. The frozen V2 evidence contains 120 workload configurations and 12,080 raw timing samples; all preregistered semantic, mutation, traceability, grounded-family, and Hodgkin-Huxley gates passed.
+\newpage
 
-The earlier backend-planning result is intentionally negative. A feature-aware selector reached median held-out p95 regret of $0.3159$, compared with $0.2981$ for a fixed Numba policy, and therefore did not satisfy its stronger generalization gate. This demotes runtime selection from the main research contribution.
+# 3. Results
 
-These results do **not** yet validate the resident-matrix thesis. The current implementation does not extract explicit $A$, $B$, and $b$ from source updates; it has no `AffineResidualProgram`, batched-intervention API, condensed MPC operator, or reachability interface. V1/V2 show that heterogeneous implementations can be admitted under explicit semantic contracts. They do not show that arbitrary-system updates retain enough affine structure for faster manipulation.
+Semantic gates passed across the frozen V3 corpus. Affine coverage was 100% for
+LTI, 55.2% for the queue, and 37.5% for Kuramoto. Generated NumPy, Numba, Torch
+CPU, and C++20 exact-affine paths agreed within maximum error
+$2.14\times10^{-14}$. At 2,048 scenarios and horizon 20, SSPM was 6.9x to 63.8x
+faster than object/scalar baselines and 13.9x faster than the equivalent queue
+event baseline. Resident intervention crossed reconstruction-heavy baselines at
+256 scenarios for every LTI and queue horizon tested.
 
-# 3. Falsifiable V3 program
+Control results preserved the same candidate objectives and selected policies,
+with no additional constraint violations. Exact LTI zonotopes and conservative
+queue intervals contained all tested trajectories. Kuramoto enclosures are
+explicitly nonformal.
 
-V3 is separately preregistered around three workloads: an exact LTI mass-spring-damper or double integrator, a piecewise-affine bounded queue and scheduler, and a controlled Kuramoto graph whose nonlinear coupling remains in the residual. The evaluation has five linked tests.
+The residual frontier is the decisive negative result. Across 50 configurations,
+resident SSPM did not beat the equivalent manual-vectorized update. At 2,048
+scenarios and horizon 20, manual NumPy was about 8.3x faster for LTI and 7.6x
+faster for queue; fused Numba was about 68.0x and 44.6x faster. Representation
+alone did not create a superior kernel.
 
-**Representability.** A restricted source compiler must extract affine coefficients, lower supported nonlinear and order-sensitive operations into residual IR, and reject hidden mutation, I/O, ambiguous aliasing, unbounded loops, and unsupported side effects. Differential tests compare one-step and trajectory behavior across object, scalar-loop, vectorized, and SSPM forms.
+Serving V1 reproduced the same boundary across two process sessions and 5,280
+retained timing samples. At 256 or more scenarios, object reconstruction divided
+by affine-residual replay was 36.17x at the median. Object reconstruction divided
+by resident intervention replay was 34.72x at the median. Manual vectorization
+won every measured serving cell.
 
-**Dynamic intervention.** Initial states, control matrices, capacities, policy parameters, constraints, and coupling strengths are changed without rewriting transition code. Experiments compare rebuilding traditional objects or event structures with resident operator updates for 1, 32, 256, and 2,048 simultaneous interventions over horizons 10, 20, and 50.
+# 4. Disposition
 
-**Control and reachability.** Exact condensed linear MPC and affine reachable sets are evaluated for the LTI family; mode-aware scenario MPC and branch-aware over-approximation are used for the queue. Kuramoto control uses local-linear or shooting methods, and its reachability results remain empirical or locally bounded. Equivalent candidate controls must produce equivalent objectives, with no additional constraint violations introduced by SSPM.
+The evidence supports SSPM as a **resident-state representation and manipulation
+method**. It provides a direct route from reconstruction-heavy models to batched
+counterfactual execution and exposes analytical operators where the mathematics
+permits. It does not support universal speed, arbitrary-system linearization, or
+formal nonlinear reachability.
 
-**Representation ablation.** Object-per-entity updates, scalar array loops, manual NumPy vectorization, equivalent discrete-event execution, fused Numba, and affine-plus-residual execution receive identical states, controls, traces, horizons, precision, and materialization boundaries. The preregistered performance gate requires at least a $2\times$ advantage over object, scalar, and equivalent discrete-event baselines at 256 or more scenarios. Comparisons against strong vectorized and fused baselines remain empirical.
-
-**Residual-burden frontier.** Nonlinear density, branch entropy, graph coupling, and updated-state dependencies increase systematically. The output is a phase diagram indexed by affine coverage and residual burden. This is the decisive falsification experiment: if modest residual complexity removes the resident-state advantage, the generalized claim must narrow to systems with stronger affine structure.
-
-# 4. Claim boundary
-
-The proposal is strongest when stated precisely:
-
-> A broad class of system updates may be usefully encoded as an affine transformation of resident matrix state plus an explicit ordered residual, enabling target interventions to propagate through shared operators and candidate scenarios to execute in batches.
-
-“Arbitrary system” names the scope being investigated; it is not a theorem that every system has a useful finite-dimensional linear representation. A residual that absorbs the entire update would preserve expressivity while providing no analytical or computational leverage. Success therefore requires all three conditions: semantic equivalence, enough reusable affine structure, and lower intervention or analysis cost at relevant scenario counts. Negative extraction results, poor reachable-set bounds, control methods with no advantage, and residual regimes where fused custom execution wins are first-class outcomes.
-
-The contribution sought is a matrix-executable systems methodology: one representation that makes dependencies inspectable, preserves nonlinearity without disguising it, and turns intervention from system reconstruction into resident state and operator manipulation. The V3 cycle is designed to determine where that proposition is real, where it is merely convenient notation, and where it fails.
+The next falsification target is explicit residual compilation and fusion. The
+open question is whether SSPM can preserve its inspectable semantic and analysis
+surface while approaching strong vectorized execution. Until that is shown,
+fused or direct vectorized paths should bypass generic affine-plus-residual
+replay when they are cheaper.
 
 # References
 
-[1] S. L. Brunton, B. W. Brunton, J. L. Proctor, and J. N. Kutz, “Koopman Invariant Subspaces and Finite Linear Representations of Nonlinear Dynamical Systems for Control,” *PLOS ONE*, 11(2), e0150171, 2016. <https://doi.org/10.1371/journal.pone.0150171>
+[1] S. L. Brunton, B. W. Brunton, J. L. Proctor, and J. N. Kutz, "Koopman
+Invariant Subspaces and Finite Linear Representations of Nonlinear Dynamical
+Systems for Control," *PLOS ONE*, 11(2), e0150171, 2016.
+<https://doi.org/10.1371/journal.pone.0150171>
 
-[2] M. Korda and I. Mezić, “Linear Predictors for Nonlinear Dynamical Systems: Koopman Operator Meets Model Predictive Control,” *Automatica*, 93, 149-160, 2018. <https://doi.org/10.1016/j.automatica.2018.03.046>
+[2] U. A. Acar et al., "An Experimental Analysis of Self-Adjusting
+Computation," *ACM TOPLAS*, 32(1), 2009.
+<https://doi.org/10.1145/1596527.1596530>
+
+[3] F. McSherry et al., "Differential Dataflow," *CIDR*, 2013.
+<https://www.cidrdb.org/cidr2013/Papers/CIDR13_Paper111.pdf>
 
 ---
 
-**Research status.** Proposal and preregistered study design. V3 results are not yet claimed. The executable implementation remains private; the public archive contains research writing and aggregate V1/V2 evidence.
+**Evidence boundary.** Local Apple Silicon experiments; bounded synthetic and
+source-informed workloads; no CUDA/Triton or production-serving claim. The
+public archive contains aggregate evidence, while raw traces and executable code
+remain private.

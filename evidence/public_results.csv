@@ -1,10 +1,11 @@
 evidence_id,family,measure,value,unit,disposition,disclosure_note
-semantic_cpp,business_v1,maximum_absolute_error,0.0000002384,state_units,supported,C++20 versus Python reference over tested rows
-mutation_catalog,business_v1,detected_perturbations,48,of_48,supported_bounded,Output-level structured perturbations rather than source-generated compiler mutations
-crossover_modes,synthetic_crossover,observed_winner_modes,4,of_4_eligible_modes,supported_local,Across 28 designed configurations on one Apple M1 Pro
-planner_selection,synthetic_crossover,held_out_oracle_selections,6,of_6,supported_secondary,Primary median-regret gate tied fixed MPS and is inconclusive
-planner_tail,synthetic_crossover,planner_p95_regret,0,fraction,supported_secondary,Fixed MPS p95 regret was 14.41 in the frozen six-case split
-hh_one_step,hodgkin_huxley_1952_v1,maximum_absolute_error,0.0000124,state_units,supported_bounded,Maximum across eligible non-reference backends
-hh_trajectory,hodgkin_huxley_1952_v1,maximum_error_after_500_steps,0.00000763,state_units,supported_bounded,Backend agreement for the chosen discretization
-hh_refinement,hodgkin_huxley_1952_v1,coarse_fine_final_difference,0.00769043,state_units,diagnostic,0.01 ms versus 0.005 ms after 10 ms; not an order study
-
+v3_lti_coverage,double_integrator,affine_coverage,100,percent,supported,Frozen exact-affine workload
+v3_queue_coverage,bounded_queue,affine_coverage,55.2,percent,supported_bounded,Counted source-operation coverage
+v3_kuramoto_coverage,controlled_kuramoto,affine_coverage,37.5,percent,supported_bounded,Graph coupling remains explicit residual
+v3_generated_error,double_integrator,max_cross_lowering_error,2.14e-14,state_units,supported,NumPy Numba Torch CPU and C++20
+v3_queue_event,bounded_queue,object_event_to_sspm_ratio_h20_n2048,13.9,ratio,supported_local,Equivalent queue-event baseline divided by SSPM
+v3_residual_frontier,mixed_residual_frontier,sspm_winning_cells,0,of_50,rejected,Manual vectorized update wins every measured cell
+serving_semantics,fluid_serving,maximum_observed_error,0,state_units,supported_bounded,One-step and 50-step checks
+serving_object_large,fluid_serving,object_to_affine_median_n256_plus,36.17,ratio,supported_local,Two sessions and host end-to-end final-state boundary
+serving_intervention,fluid_serving,object_to_resident_intervention_median,34.72,ratio,supported_local,Range 24.29x to 54.34x over measured cells
+serving_vectorized,fluid_serving,resident_winning_cells_vs_manual_vectorized,0,of_56,rejected,Generic resident replay duplicates work in residual-heavy transition
