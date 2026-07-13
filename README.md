@@ -53,6 +53,8 @@ These results remain published unchanged as supporting evidence for semantic dis
 
 ## Read the archive
 
+- [Short paper: Matrix-Executable System Semantics](papers/resident-matrix-systems.pdf)
+- [Short paper source](papers/RESIDENT_MATRIX_SYSTEMS.md)
 - [V3 preregistration: Matrix-Executable System Representation](research/preregistration_v3.md)
 - [V1/V2 evidence report](papers/state-space-programming-methodology.pdf)
 - [V1/V2 report source](papers/STATE_SPACE_PROGRAMMING_METHODOLOGY.md)
@@ -69,7 +71,7 @@ The executable workbench remains a separate engineering artifact. This archive i
 
 ## Status
 
-`public research archive / v1.2 / July 2026`
+`public research archive / v1.3 / July 2026`
 
 V3 is preregistered but not yet evidenced. Its acceptance gates must be evaluated before the planned report, *Matrix-Executable System Semantics for Batched Control and Analysis*, is presented as a result.
 
