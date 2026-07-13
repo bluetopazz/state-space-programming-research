@@ -4,8 +4,9 @@
 
 | Proposed claim | Current disposition | Required evidence |
 |---|---|---|
-| Supported traditional updates can be extracted exactly into affine terms plus ordered residual IR | Preregistered; not yet established | Frozen corpus, extraction metrics, one-step and trajectory agreement, explicit rejection tests |
-| Matrix-executable operators make batched intervention materially cheaper | Preregistered; not yet established | Identical interventions at 1, 32, 256, and 2,048 scenarios with setup, rollout, allocation, and break-even measurements |
+| Arbitrary system updates admit a useful linear-primary resident-matrix representation with explicit residual closure | Proposed; not established as a general result | Frozen cross-domain corpus, affine coverage, residual burden, semantic agreement, and explicit rejection tests |
+| Supported traditional updates can be extracted exactly into affine terms plus ordered residual IR | Preregistered; not yet established | Source extraction metrics, one-step and trajectory agreement, mode/event preservation, explicit rejection tests |
+| Resident target manipulation makes batched intervention materially cheaper and more dynamically reconfigurable | Preregistered; not yet established | Identical target deltas at 1, 32, 256, and 2,048 scenarios with setup, propagation, rollout, allocation, reuse, and break-even measurements |
 | SSPM supports equivalent MPC objectives and constraints | Preregistered; not yet established | Candidate-control objective agreement and no additional constraint violations across the workload ladder |
 | SSPM supports useful reachability analysis | Preregistered; scope-dependent | Exact LTI sets, branch-aware queue over-approximation, empirical or local Kuramoto bounds, containment validation |
 | Affine coverage predicts when matrix execution remains useful | Preregistered falsification target | Residual-density, branch-entropy, graph-coupling, and updated-state frontier with an execution/analysis phase diagram |

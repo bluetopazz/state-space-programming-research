@@ -5,7 +5,7 @@
 SSPM now separates two evidence layers:
 
 - **V1/V2 evidence:** family identity, sampled differential validation, trajectory checks, transfer-aware measurement, and feature-aware backend selection.
-- **V3 research cycle:** extraction into an affine core plus ordered residual, generated execution, operator-level control and analysis, and a residual-burden falsification frontier.
+- **V3 research cycle:** resident matrix state, extraction into an affine core plus ordered residual, target-variable manipulation, generated execution, operator-level control and analysis, and a residual-burden falsification frontier.
 
 The V1/V2 results remain fixed. They support the discipline around semantics and execution but do not count as evidence that the V3 representation improves MPC, reachability, intervention, or composition.
 
@@ -13,7 +13,7 @@ The V1/V2 results remain fixed. They support the discipline around semantics and
 
 SSPM studies fixed-width, batched numerical transitions. A transition family defines the meaning of a row, the names and units of state fields, admissible input structure, update ordering, coupling semantics, numerical bounds, dtype, and an executable reference.
 
-The V3 representation introduces an `AffineResidualProgram` containing typed state and input schemas, $A$, $B$, $b$, ordered residual IR, projection, mode predicates, coupling, and provenance. A restricted source compiler must extract supported affine terms exactly and explicitly reject unsupported effects.
+The V3 representation introduces an `AffineResidualProgram` containing typed state and input schemas, resident state layout, $A$, $B$, $b$, ordered residual IR, projection, mode predicates, coupling, and provenance. A restricted source compiler must extract supported affine terms exactly and explicitly reject unsupported effects. Intervention experiments must distinguish updating resident state or operators from reconstructing traditional object and event models.
 
 The current V1/V2 implementation uses schema fingerprints and sampled numerical comparisons. Metadata alone does not prove functional identity, and the present runtime does not yet enforce every declared field bound or kind. Public claims therefore distinguish existing evidence from preregistered V3 objectives.
 

@@ -2,7 +2,8 @@
 
 - V3 is a preregistered research program, not a completed result.
 - No current evidence establishes exact source extraction, improved MPC, tighter reachability, cheaper intervention, or a favorable residual-burden frontier.
-- “Affine-plus-residual” does not imply that arbitrary systems are globally linear.
+- “Arbitrary system” is the scope of the proposal, not a theorem that every system has a useful finite-dimensional linear representation.
+- Because an unrestricted residual can absorb any omitted behavior, decomposition alone is not evidence of usefulness; affine coverage and residual burden must carry the claim.
 - Formal reachability will be claimed only for mathematical cases that support it; nonlinear Kuramoto results remain empirical or locally bounded.
 
 - The current study covers three transition families; two are synthetic stressors.

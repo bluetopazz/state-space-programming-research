@@ -2,7 +2,7 @@
 
 ## Suggested citation
 
-Mack, Ronnie. *State-Space Programming Methodology: Matrix-Executable System Semantics for Batched Control and Analysis*. Ronnie's Lab, public research archive version 1.1, July 2026. https://github.com/bluetopazz/state-space-programming-research
+Mack, Ronnie. *State-Space Programming Methodology: Matrix-Executable System Semantics for Batched Control and Analysis*. Ronnie's Lab, public research archive version 1.2, July 2026. https://github.com/bluetopazz/state-space-programming-research
 
 ## BibTeX
 
@@ -14,6 +14,6 @@ Mack, Ronnie. *State-Space Programming Methodology: Matrix-Executable System Sem
   month        = {July},
   publisher    = {Ronnie's Lab},
   url          = {https://github.com/bluetopazz/state-space-programming-research},
-  note         = {Public research archive, version 1.1}
+  note         = {Public research archive, version 1.2}
 }
 ```

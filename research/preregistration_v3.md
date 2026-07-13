@@ -6,7 +6,7 @@
 
 ## 1. Research position
 
-SSPM V3 is centered on a matrix-executable representation of traditional state-update programs. For state matrix $S_t$, controls $U_t$, affine operators $A$ and $B$, bias $b$, and ordered residual program $H_{\mathrm{ordered}}$:
+SSPM V3 proposes that arbitrary system updates can be modeled as transformations over a resident state matrix, with irreducible nonlinear and ordered behavior isolated explicitly. For state matrix $S_t$, controls $U_t$, affine operators $A$ and $B$, bias $b$, and ordered residual program $H_{\mathrm{ordered}}$:
 
 $$
 L_t=S_tA^\top+U_tB^\top+b,
@@ -16,13 +16,22 @@ $$
 S_{t+1}=P_{\mathcal M}\left(L_t+H_{\mathrm{ordered}}(S_t,U_t,L_t)\right).
 $$
 
-$P_{\mathcal M}$ applies declared projection and mode logic. The representation does not claim that arbitrary systems are globally linear. It isolates an explicit affine core while preserving unsupported nonlinear and ordered behavior in a visible residual.
+$P_{\mathcal M}$ applies declared projection and mode logic. System state remains resident in matrix form across repeated updates and scenario batches. An intervention changes a target state variable, control, parameter, constraint, or operator entry; the shared transformation then propagates its effects through the rest of the modeled system.
+
+The proposal is linear-primary rather than globally linear. With an unrestricted residual, arbitrary representability is trivial. The empirical claim is stronger and falsifiable: useful systems must retain enough affine coverage that resident matrix manipulation is computationally and analytically preferable before residual evaluation, branching, or coupling dominates.
 
 The flagship question is:
 
-> Can this representation preserve traditional update semantics while enabling faster and more direct MPC, reachability, intervention, composition, and batched scenario analysis?
+> Can arbitrary systems be represented as linear-primary transformations of resident state, with explicit residual closure, so that target interventions propagate more efficiently and dynamically than rebuilding traditional object or event models?
 
 Execution speed and backend selection are supporting evidence. Control and analysis are the principal proposed benefits.
+
+### 1.1 Primary hypotheses
+
+- **H1 - semantic representation:** supported traditional updates can be extracted into affine operators plus ordered residual IR without changing one-step, trajectory, mode, or event semantics.
+- **H2 - resident manipulation:** changing target states, controls, parameters, constraints, or operator entries can reuse resident state and shared transformations rather than reconstructing the system representation.
+- **H3 - batched dynamism:** this reuse lowers setup and rollout cost as simultaneous interventions increase, while preserving objectives and constraints.
+- **H4 - bounded generality:** benefit is predictable from affine coverage and residual burden; if modest nonlinearity removes the benefit, the generalized claim must narrow.
 
 ## 2. Representation contract
 
@@ -102,9 +111,9 @@ Use identical initial states, controls, event traces, horizons, precision, and m
 
 ## 7. Experiment E3: dynamic intervention
 
-Vary control matrices, policy parameters, queue capacities, coupling strength, constraints, and initial-state cohorts without rewriting transition code.
+Keep system state resident as a matrix. Apply sparse or structured deltas to target state columns, control matrices, policy parameters, queue capacities, coupling strength, constraints, and initial-state cohorts without rewriting transition code.
 
-Measure intervention setup latency, rollout latency, memory allocation, and break-even scenario count. Compare rebuilding traditional objects or events against swapping operators and executing batched candidate matrices.
+Measure target-change setup latency, propagation latency, rollout latency, memory allocation, state reuse, and break-even scenario count. Compare rebuilding traditional objects or events against updating resident state or operators and executing batched candidate matrices.
 
 Test 1, 32, 256, and 2,048 simultaneous interventions over horizons 10, 20, and 50.
 
@@ -137,7 +146,7 @@ Systematically increase:
 
 Measure where affine batching remains useful and where fused custom execution becomes superior. Produce an execution/analysis phase diagram indexed by affine coverage and residual burden.
 
-This is the principal falsification experiment. If benefits disappear at modest residual density, the generalized representation claim must be narrowed.
+This is the principal falsification experiment. If benefits disappear at modest residual density, or if resident updates require reconstruction comparable to traditional models, the generalized representation claim must be narrowed.
 
 ## 11. Experiment E7: hardware extension
 

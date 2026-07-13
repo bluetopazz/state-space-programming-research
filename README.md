@@ -2,7 +2,7 @@
 
 > A public research archive on matrix-executable system semantics for batched control and analysis.
 
-State-Space Programming Methodology (SSPM) asks whether traditional update programs can be represented as an explicit affine core plus an ordered residual:
+State-Space Programming Methodology (SSPM) proposes that arbitrary system updates can be approached as transformations over a resident state matrix. The primary representation is an explicit affine core plus an ordered residual:
 
 $$
 L_t=S_tA^\top+U_tB^\top+b,
@@ -12,9 +12,13 @@ $$
 S_{t+1}=P_{\mathcal M}\left(L_t+H_{\mathrm{ordered}}(S_t,U_t,L_t)\right).
 $$
 
+The state remains resident as a matrix. An intervention changes a target state variable, control, parameter, constraint, or operator entry, then propagates the consequences through the shared transformation rather than rebuilding a collection of objects or events. Many candidate interventions can be stacked and evaluated as batched matrices.
+
 The affine core exposes direct system operators. The residual preserves nonlinear expressions, branches, updated-state reads, masks, graph reductions, projection, and mode logic that cannot be moved into the matrix terms without changing semantics.
 
-The flagship question is whether this representation preserves traditional update behavior while enabling faster and more direct model-predictive control, reachability, intervention, composition, and batched scenario analysis. Heterogeneous execution and backend selection remain supporting infrastructure rather than the principal contribution.
+The flagship hypothesis is that a linear-primary representation of system state can preserve traditional update behavior while enabling faster and more dynamic manipulation: intervention, propagation, model-predictive control, reachability, composition, and batched scenario analysis. Heterogeneous execution and backend selection remain supporting infrastructure rather than the principal contribution.
+
+“Arbitrary system” is a research proposal, not a current theorem. With an unrestricted residual, any update can be decomposed trivially; the nontrivial claim is that real systems retain enough affine structure for resident matrix manipulation to provide analytical and computational leverage before residual burden dominates.
 
 The project starts from one rule:
 
@@ -22,10 +26,10 @@ The project starts from one rule:
 
 ## What the research asks
 
-1. Which traditional update programs can be extracted exactly into an affine core plus ordered residual IR?
-2. Does the representation preserve one-step, trajectory, mode, and event semantics across object, loop, vectorized, and generated forms?
-3. Do explicit operators improve batched intervention, MPC, composition, and reachability without hiding approximation or constraint violations?
-4. Where does increasing residual density, branch entropy, graph coupling, or updated-state dependence erase the benefit?
+1. Can arbitrary traditional system updates be represented as a linear-primary transformation over resident state, with all irreducible behavior isolated explicitly in an ordered residual?
+2. Does changing one target variable, control, or operator and propagating the transformation preserve the behavior of the traditional system model?
+3. Does resident matrix state make many interventions, MPC candidates, compositions, and reachability queries faster and more dynamically reconfigurable than rebuilding object or event systems?
+4. Where does increasing residual density, branch entropy, graph coupling, or updated-state dependence erase that advantage?
 
 ## V3 research program
 
@@ -65,7 +69,7 @@ The executable workbench remains a separate engineering artifact. This archive i
 
 ## Status
 
-`public research archive / v1.1 / July 2026`
+`public research archive / v1.2 / July 2026`
 
 V3 is preregistered but not yet evidenced. Its acceptance gates must be evaluated before the planned report, *Matrix-Executable System Semantics for Batched Control and Analysis*, is presented as a result.
 
