@@ -1,82 +1,73 @@
-# Methods and Completed Evidence
+# Methods and Evidence
 
-## Representation
+## Runtime contract
 
-The executable research workbench defines an AffineResidualProgram containing
-typed state and input schemas, affine operators A, B, and b, an ordered residual,
-projection and mode logic, coupling metadata, and provenance. A restricted
-source compiler extracts supported affine terms and rejects hidden mutation,
-I/O, ambiguous aliasing, loops, and unsupported side effects rather than
-silently approximating them.
+The executable workbench separates five responsibilities:
 
-The same representation exposes rollout, composition, batched intervention,
-local linearization, controllability, reachability, and model-predictive control
-operations. Exact analytical claims are restricted to exact affine programs.
+1. **State declaration.** The system state, controls, parameters, projections,
+   and requested outputs are explicit.
+2. **Dependency declaration.** Transition reads, writes, ordering, and local or
+   graph coupling determine the affected closure.
+3. **Resident baseline.** A from-scratch trajectory is retained as the reusable
+   reference for repeated interventions.
+4. **Compact execution.** The runtime recomputes the complete closure and
+   reconstructs the demanded output.
+5. **Fallback.** Full replay remains the correct path when locality vanishes,
+   declaration is insufficient, or compact materialization is not cheaper.
 
-## Workload ladder
+The source frontend supports four grammar families across 60 parameterized
+programs. This is a compiler corpus, not 60 independent applications. Nonlinear
+products are residual rather than affine; unsupported mutation, I/O, aliasing,
+unbounded loops, and side effects reject instead of silently approximating.
 
-| Family | Role | Affine coverage | Analysis boundary |
-| --- | --- | ---: | --- |
-| Double integrator | Exact LTI reference | 100% | Exact composition, MPC, and zonotope reachability |
-| Bounded queue/scheduler | Piecewise-affine infrastructure system | 55.2% | Scenario MPC and conservative branch-aware reachability |
-| Controlled Kuramoto | Nonlinear graph system | 37.5% | Shooting MPC and local/empirical reachability only |
-| Fluid serving scheduler | Source-informed infrastructure application | Residual-heavy | Counterfactual replay; not hardware-calibrated serving |
+## Validation discipline
 
-## Semantic gates
+Every performance claim follows semantic validation. The workbench uses
+one-step and trajectory differential tests, mutation tests, frozen manifests,
+deterministic seeds, repeated process sessions, checksummed evidence, and named
+materialization boundaries. The corrected affine classifier retains the frozen
+V13 corpus result: 40 accepted and 20 rejected parameterized programs, with
+zero maximum error among accepted cases.
 
-The frozen V3 corpus compares object, scalar-loop, manual NumPy, fused Numba,
-event, and SSPM trajectories under identical initial states, controls, traces,
-horizons, precision, and output boundaries. All tested trajectories agreed
-within declared tolerances. Six mutation classes - coefficient, dependency,
-ordering, threshold, projection, and mode - achieved 100% detection. Generated
-exact-affine NumPy, Numba, Torch CPU, and C++20 paths agreed within maximum error
-2.14e-14.
+## Evidence progression
 
-These are bounded differential results. They do not prove arbitrary source
-program equivalence.
+| Cycle | Question | Public disposition |
+| --- | --- | --- |
+| V4 | Can resident incremental execution preserve a conventional transition? | Exactness supported; sparse CPU gains, dense losses |
+| V5-V7 | Does the model transfer and can generated execution reduce overhead? | Transfer supported; fusion important; broad universality rejected |
+| V8-V10 | Where is the locality boundary and how should execution be selected? | Closure is predictive, but selection and materialization costs matter |
+| V11 | Does the result survive stronger JAX, Torch, GraphBLAS, and handwritten controls? | Sparse conditional gains; broad median and cold-start gates fail |
+| V12 | Does the mechanism transfer to queue, thermal, and branching applications? | 14/16 sparse wins; dense full replay remains necessary |
+| V13 | Does the complete method help on external workflow traces? | 21/24 end-to-end wins; dense coverage absent; selector is post-hoc |
 
-## Intervention and execution results
+## Application evidence
 
-At 2,048 scenarios and horizon 20, SSPM was between 6.9x and 63.8x faster than
-object/scalar baselines, and 13.9x faster than the equivalent queue-event
-baseline. Resident intervention crossed reconstruction-heavy baselines at 256
-scenarios for every LTI and queue horizon tested.
+V12 tested traffic, dynamic queue, thermal diffusion, and branch-aware
+intervention. Sparse rows produced 14 wins in 16 comparisons, with 4.36x median
+speedup among winning rows. Dense full execution won all seven dense rows, with
+a 3.44x median advantage. This paired result is central: the mechanism is
+useful where dependency closure stays local, and the fallback is part of the
+method rather than an exception to it.
 
-The stronger kernel claim failed. At the same scale, manual NumPy was roughly
-8.3x faster than SSPM for LTI and 7.6x faster for queue; fused Numba was roughly
-68.0x and 44.6x faster. Across 50 residual-frontier configurations, resident
-SSPM won none against the equivalent manual-vectorized update.
+V13 tested external Montage workflow traces under repeated local changes. The
+resident decision path won 23 of 24 rows at a 5.58x median among wins. Including
+the measured workflow boundary, 21 of 24 rows won at a 4.43x median among wins.
+Those are different timing claims and are reported separately.
 
-## Serving study
+## Negative and deferred evidence
 
-A separately frozen cycle represented a source-informed fluid scheduler with
-prefill/decode backlog, KV occupancy, admission, completion, drops, and
-accumulated latency work. Across two process sessions and 5,280 retained timing
-samples:
+The broad V11 median was slower than the strongest compiled-batch baseline, cold JIT
+cost was not recovered through the tested horizon, and GraphBLAS did not create
+a universal win. V13 has no dense rows, so it cannot establish its own dense
+fallback boundary. Differential Dataflow and isolated-container reproduction
+were not completed. CUDA/Triton and multi-GPU evaluation remain deferred.
 
-- one-step and 50-step semantic agreement passed with zero observed error;
-- object reconstruction / affine-residual replay was 36.17x at the median for
-  256 or more scenarios;
-- object reconstruction / resident intervention replay was 34.72x at the
-  median, ranging from 24.29x to 54.34x;
-- manual vectorization beat generic affine-residual and resident replay in every
-  measured cell.
+The V13 classifier uses realized closure after compact execution. It is useful
+as a post-hoc locality analysis, but not as a pre-execution operational selector.
 
-The model is source-informed but not calibrated to vLLM, model kernels,
-production traces, TTFT, TPOT, or SLO distributions.
+## Source of record
 
-## Control and reachability
-
-Exact condensed LTI MPC, 512-candidate queue scenario MPC, and 256-candidate
-Kuramoto shooting MPC selected equivalent policies and objectives across
-traditional and SSPM execution, with no additional constraint violations.
-Exact LTI zonotopes and conservative queue intervals contained every tested
-trajectory. Kuramoto enclosures are explicitly local or empirical, not formal.
-
-## Reproducibility boundary
-
-The private executable source of record retains raw repetitions, deterministic
-seeds, source checksums, controls, solver settings, package versions, and
-machine manifests. This public archive exposes only aggregate, non-sensitive
-evidence and the frozen V3 protocol. No result should be generalized beyond the
-declared workloads and local hardware.
+The [executable workbench](https://github.com/bluetopazz/state-space-programming)
+contains implementation, tests, manifests, raw repetitions, checksums, papers,
+and the complete v5-v13 result history. This archive contains only bounded,
+sanitized public summaries.

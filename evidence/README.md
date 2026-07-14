@@ -1,9 +1,12 @@
-# Public Evidence
+# Sanitized Public Evidence
 
-public_results.csv is the sanitized aggregate surface for the completed V3 and
-Serving V1 cycles. It excludes raw repetitions, source code, machine paths,
-private manifests, and implementation details.
+`public_results.csv` contains normalized, aggregate results used by the public
+archive. It excludes raw timing samples, private paths, host identifiers,
+credentials, exact operational configuration, and application source code.
 
-Performance values are descriptive observations from local Apple Silicon runs.
-Ratios name both numerator and denominator so they cannot be read as universal
-speedups. Negative vectorized-baseline results are included.
+Each row records its timing boundary and disclosure limit. Ratios greater than
+one mean the named preferred path was faster under that row's source experiment.
+Resident-only and end-to-end workflow figures are intentionally separate.
+
+The executable source of record is:
+<https://github.com/bluetopazz/state-space-programming>

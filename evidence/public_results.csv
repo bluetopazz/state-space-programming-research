@@ -1,11 +1,16 @@
-evidence_id,family,measure,value,unit,disposition,disclosure_note
-v3_lti_coverage,double_integrator,affine_coverage,100,percent,supported,Frozen exact-affine workload
-v3_queue_coverage,bounded_queue,affine_coverage,55.2,percent,supported_bounded,Counted source-operation coverage
-v3_kuramoto_coverage,controlled_kuramoto,affine_coverage,37.5,percent,supported_bounded,Graph coupling remains explicit residual
-v3_generated_error,double_integrator,max_cross_lowering_error,2.14e-14,state_units,supported,NumPy Numba Torch CPU and C++20
-v3_queue_event,bounded_queue,object_event_to_sspm_ratio_h20_n2048,13.9,ratio,supported_local,Equivalent queue-event baseline divided by SSPM
-v3_residual_frontier,mixed_residual_frontier,sspm_winning_cells,0,of_50,rejected,Manual vectorized update wins every measured cell
-serving_semantics,fluid_serving,maximum_observed_error,0,state_units,supported_bounded,One-step and 50-step checks
-serving_object_large,fluid_serving,object_to_affine_median_n256_plus,36.17,ratio,supported_local,Two sessions and host end-to-end final-state boundary
-serving_intervention,fluid_serving,object_to_resident_intervention_median,34.72,ratio,supported_local,Range 24.29x to 54.34x over measured cells
-serving_vectorized,fluid_serving,resident_winning_cells_vs_manual_vectorized,0,of_56,rejected,Generic resident replay duplicates work in residual-heavy transition
+evidence_id,cycle,application_family,regime,measure,value,unit,timing_boundary,disposition,disclosure_note
+source_corpus,v13,source_frontend,parameterized,accepted_programs,40,of_60,semantic_validation,supported_bounded,Four supported grammar families across ten parameterizations each
+source_rejection,v13,source_frontend,parameterized,rejected_programs,20,of_60,semantic_validation,supported_bounded,Two unsupported template families reject explicitly
+v11_sparse,v11,traffic_and_thermal,sparse,median_speedup,2.32,ratio,decision_path,supported_local,Median over five qualifying sparse rows against strongest JAX or Torch control
+v11_broad,v11,traffic_and_thermal,mixed,sspm_relative_performance,0.55,ratio,decision_path,rejected_broad,Reciprocal of 1.82x broad slowdown versus strongest compiled-batch baseline
+v11_cold,v11,jit_backends,cold,cold_cost_recovered,0,boolean,through_10000_decisions,failed,Cold compilation did not amortize in tested range
+v12_sparse_wins,v12,multi_application,sparse,winning_rows,14,of_16,decision_path,supported_local,Traffic queue thermal and branching rows
+v12_sparse_speed,v12,multi_application,sparse,median_speedup_among_wins,4.36,ratio,decision_path,supported_local,Compact divided into full among winning rows
+v12_dense_wins,v12,multi_application,dense,full_replay_winning_rows,7,of_7,decision_path,supported_fallback,Locality disappears in dense rows
+v12_dense_speed,v12,multi_application,dense,full_replay_median_advantage,3.44,ratio,decision_path,supported_fallback,Full divided into compact convention inverted to preferred-path advantage
+v13_resident_wins,v13,workflow_traces,sparse,resident_winning_rows,23,of_24,resident_decision,supported_local,External Montage workflow traces
+v13_resident_speed,v13,workflow_traces,sparse,median_speedup_among_wins,5.58,ratio,resident_decision,supported_local,Resident-only timing boundary
+v13_workflow_wins,v13,workflow_traces,sparse,end_to_end_winning_rows,21,of_24,end_to_end_workflow,supported_local,Includes measured workflow boundary
+v13_workflow_speed,v13,workflow_traces,sparse,median_speedup_among_wins,4.43,ratio,end_to_end_workflow,supported_local,End-to-end timing distinct from resident-only result
+v13_dense_coverage,v13,workflow_traces,dense,measured_rows,0,count,end_to_end_workflow,unmeasured,No dense rows in frozen external trace set
+v13_selector,v13,workflow_traces,sparse,preexecution_operational_selector,0,boolean,post_hoc_analysis,rejected_operational,Classifier consumes realized closure after compact execution

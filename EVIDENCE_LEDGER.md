@@ -1,16 +1,20 @@
 # Evidence Ledger
 
-| Claim | Disposition | Public evidence | Boundary |
+| Public statement | Source artifact | Validation | Disposition and boundary |
 | --- | --- | --- | --- |
-| Supported updates can be represented as affine structure plus explicit residual | Supported for frozen V3 corpus | 100% LTI, 55.2% queue, 37.5% Kuramoto affine coverage | Bounded side-effect-free subset; unsupported effects reject |
-| Generated exact-affine lowerings preserve semantics | Supported | NumPy, Numba, Torch CPU, C++20 max error 2.14e-14 | Nonlinear residual code generation remains future work |
-| One representation can support intervention, MPC, and reachability | Supported within tested families | Equivalent policies/objectives; containment gates pass | Exact claims restricted to affine LTI; queue conservative; Kuramoto local/empirical |
-| Resident state improves large batched intervention over reconstruction-heavy models | Supported locally | V3 crossover plus 34.72x serving intervention median | Machine-local, synthetic/source-informed workloads |
-| SSPM is faster than manual vectorization or fused kernels | Rejected in measured residual workloads | 0/50 residual-frontier wins; 0 serving control-cell wins | Fusion or direct vectorized bypass is required |
-| SSPM provides universal finite-dimensional linearization | Explicitly rejected | Ordered residual and projection preserve nonlinearity | Arbitrary-system scope remains a research hypothesis |
-| Serving study reproduces production inference behavior | Explicitly rejected | Fluid scheduler only | No model kernels, production traces, TTFT, TPOT, or SLO calibration |
-| CUDA/Triton and dual-A6000 portability is established | Unmeasured | No public result | Requires a separately frozen hardware cycle |
+| Incremental execution matches full replay under declared dependencies | Workbench tests; V5-V13 validators | Differential tests and exactness gates pass | Supported only under the conditional runtime contract |
+| Source frontend accepts 40 and rejects 20 parameterized programs | `artifacts/v13/summary.json` | Frozen corpus unchanged after nonlinear-product fix | Four supported grammar families, not 60 independent applications |
+| Sparse V12 rows win 14/16 comparisons | `artifacts/v12/summary.json` | V12 evidence validator passes | Supported on tested CPU/application rows |
+| V12 sparse winning-row median is 4.36x | `artifacts/v12/summary.json` | Reconciled from frozen summary | Compact/full ratio among wins, not an all-row mean |
+| Dense full replay wins 7/7 V12 dense rows | `artifacts/v12/summary.json` | V12 evidence validator passes | Supports fallback requirement, not incremental speed |
+| V13 resident decision wins 23/24 rows at 5.58x median among wins | `artifacts/v13/summary.json` | V13 evidence validator passes | Resident decision boundary only |
+| V13 complete workflow wins 21/24 rows at 4.43x median among wins | `artifacts/v13/summary.json` | V13 evidence validator passes | End-to-end measured workflow boundary |
+| V13 locality classifier is predictive before execution | `scripts/run_v13_experiments.py`; V13 summary | Audit shows realized closure is consumed after compact execution | Rejected as operational claim; retained as post-hoc analysis |
+| External backends establish a universal speed advantage | `artifacts/v11/summary.json` | V11 evidence validator passes | Rejected; sparse subset wins but broad median loses |
+| Cold compilation amortizes in tested range | `artifacts/v11/summary.json` | V11 evidence validator passes | Failed through the tested 10,000-decision range |
+| Dense V13 behavior is established | `artifacts/v13/summary.json` | Coverage audit | Unmeasured; external traces produced no dense rows |
+| CUDA/Triton or multi-GPU portability is established | V12/V13 accelerator records | Availability audit | Deferred or unavailable; no performance claim |
+| Differential Dataflow and isolated reproduction are complete | V13 external/reproduction records | Gate audit | Failed or incomplete; preserved explicitly |
 
-Negative and contradictory outcomes are retained. A speed claim is valid only
-after semantic agreement and only against the named baseline, workload size,
-timing boundary, and hardware.
+Raw measurements, host fields, machine paths, and operational details remain in
+the executable source of record and are not duplicated here.
