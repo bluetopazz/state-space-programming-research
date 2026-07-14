@@ -19,10 +19,18 @@ incremental execution always wins. It is a bounded execution model for repeated
 "what changes if this changes?" workloads where state, dependencies, and output
 requirements are explicit.
 
+The formal proof models an execution as a time-expanded dependency graph. It
+shows by topological induction that complete affected-closure recomputation and
+baseline reuse are equal to full replay on demanded outputs under the declared
+semantic premises. The result applies to deterministic nonlinear nodes as well
+as affine ones; it does not require global linearity.
+
 ## Read first
 
 - [Short paper: State-Aware Computing](papers/state-aware-computing.pdf)
 - [Paper source](papers/STATE_AWARE_COMPUTING.md)
+- [Formal semantics and conditional exactness proof](papers/formal-semantics-and-conditional-exactness.pdf)
+- [Formal proof source](papers/FORMAL_SEMANTICS_AND_CONDITIONAL_EXACTNESS.md)
 - [Canonical claim and conditional exactness boundary](CLAIM.md)
 - [Methods and evidence](METHODS_AND_EVIDENCE.md)
 - [Claim-by-claim evidence ledger](EVIDENCE_LEDGER.md)

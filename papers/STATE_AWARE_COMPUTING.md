@@ -40,6 +40,11 @@ and exogenous inputs; and output reconstruction is complete. An omitted
 dependency or hidden side effect breaks the premise. Full replay is therefore a
 correctness-preserving runtime path, not merely a performance baseline.
 
+A complete proof models the rollout as a time-expanded dependency graph and
+uses topological induction to establish unaffected-node invariance and
+recomputed-node equality. See [Formal Semantics and Conditional Exactness of
+State-Aware Transition Reuse](FORMAL_SEMANTICS_AND_CONDITIONAL_EXACTNESS.md).
+
 ![State-aware execution model](../figures/state-aware-execution.png)
 
 # 2. Mechanism and novelty boundary

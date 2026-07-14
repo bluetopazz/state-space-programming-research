@@ -40,6 +40,11 @@ conditions hold:
 This is a conditional semantic statement, not a theorem about arbitrary hidden
 state, side effects, or undeclared dependencies.
 
+The complete definitions, lemmas, proof by topological induction, nonlinear
+extension, floating-point interpretation, and failure boundary are given in
+[Formal Semantics and Conditional Exactness of State-Aware Transition
+Reuse](papers/FORMAL_SEMANTICS_AND_CONDITIONAL_EXACTNESS.md).
+
 ## Why state awareness matters
 
 Repeated intervention workloads often differ in only a small portion of an
