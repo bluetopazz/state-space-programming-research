@@ -26,6 +26,15 @@ locality classifier, not a deployable selector that decides before paying the
 compact cost. A practical runtime still needs a conservative pre-execution cost
 model or inexpensive closure estimate.
 
+## Governed-state boundary
+
+The operational-state extension treats policy and visibility as declared
+execution context. That rule prevents reuse across incompatible projections by
+construction, but it has not yet been benchmarked across real policy engines,
+multi-tenant systems, revocation races, or external side effects. It is not a
+general noninterference proof. Authorization, durable commit, and audit remain
+separate system responsibilities around the pure transition model.
+
 ## Evidence gaps
 
 - V13 contains no dense rows and cannot independently validate fallback policy.
@@ -33,6 +42,8 @@ model or inexpensive closure estimate.
 - Isolated reproduction did not pass as a completed gate.
 - CUDA/Triton, multi-GPU, energy, and production-service behavior are unmeasured.
 - Current external traces cover one workflow family and local CPU conditions.
+- Policy-aware closure, projection changes, and revocation behavior are not part
+  of the current performance evidence.
 
 ## Next falsification targets
 

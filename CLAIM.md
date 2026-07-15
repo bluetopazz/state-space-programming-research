@@ -53,6 +53,21 @@ baseline state resident, edit the target, compute the complete affected region,
 and reuse everything outside it. The runtime can therefore avoid recomputing
 unaffected work while retaining a correctness-preserving full-replay path.
 
+## Governed state projections
+
+An operational system may expose different state projections for different
+principals, purposes, policies, or revisions. In that setting, the projection
+context is part of the declared execution state. A cached result is reusable
+only when its state revision, policy revision, purpose, visibility boundary,
+transition semantics, and exogenous inputs remain compatible.
+
+Derived outputs must be computed from the authorized projection rather than
+computed from unrestricted state and filtered afterward. A policy or visibility
+change is therefore an intervention that can expand the affected closure or
+force full replay. This extends the SSPM semantic discipline; the current
+workbench does not yet establish policy-aware performance or a general security
+theorem. See [Governed Operational State and Safe Reuse](research/GOVERNED_OPERATIONAL_STATE.md).
+
 ## What is not claimed
 
 - SSPM does not model arbitrary systems as globally linear transformations.
@@ -62,3 +77,5 @@ unaffected work while retaining a correctness-preserving full-replay path.
 - Differential tests support bounded consistency; they are not universal
   formal verification.
 - No CUDA/Triton, multi-GPU, energy, or production-service claim is made.
+- No general authorization, noninterference, or policy-aware speed claim is
+  made.

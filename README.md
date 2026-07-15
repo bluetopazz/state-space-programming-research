@@ -58,6 +58,17 @@ as affine ones; it does not require global linearity.
 - [Cross-application evidence](figures/application-evidence.png)
 - [End-to-end workflow result](figures/workflow-result.png)
 
+## Methodological extension
+
+- [Governed operational state and safe reuse](research/GOVERNED_OPERATIONAL_STATE.md)
+
+The extension asks what changes when the resident state is an authorized view
+rather than one universal state. Its central rule is conservative: policy,
+purpose, visibility, and revision belong to the declared execution context.
+Changing any of them invalidates reuse outside a newly computed authorized
+closure. This is a semantic design consequence of SSPM, not a new performance
+or security result.
+
 ## Archive boundary
 
 This repository is a code-free research surface. It contains writing, figures,
