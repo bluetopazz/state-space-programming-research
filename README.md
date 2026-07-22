@@ -45,8 +45,8 @@ as affine ones; it does not require global linearity.
   tested traffic, queue, thermal, and workflow families.
 - Compact branching and selective materialization reduced measured cost in
   bounded sparse V12 and V13 rows; the ratios remain in the evidence ledger.
-- A fair E2A control reproduced the same adaptive transition work at a 1.0000
-  executed-work ratio, rejecting an intrinsic representation-speed reading.
+- A fair E2A control reproduced the same adaptive transition work exactly,
+  rejecting an intrinsic representation-speed reading.
   See the [E2A correction](https://github.com/bluetopazz/electrons-to-agents-research/blob/main/CORRECTION.md).
 - Dense, cold-compilation, materialization-heavy, and several external-backend
   regimes did not support a general speed claim.

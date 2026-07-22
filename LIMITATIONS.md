@@ -15,9 +15,9 @@ advantage. V12 shows this directly: sparse compact rows often win while full
 replay wins every tested dense row. Cold compilation and accelerator transfer
 can dominate the decision budget.
 
-Reported ratios are local and conditional. The 5.58x V13 figure is a resident
-decision-path result; the 4.43x figure includes the measured end-to-end workflow
-boundary. Neither is a universal application speedup.
+Reported ratios are local and conditional. V13 separately measures the resident
+decision path and the broader end-to-end workflow boundary. Neither is a
+universal application speedup; exact ratios remain in the evidence ledger.
 
 They are also not evidence that state representation itself causes speed. E2A
 Case 15 reached executed-work parity after an equally adaptive conventional

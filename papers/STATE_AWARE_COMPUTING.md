@@ -85,17 +85,18 @@ After correcting affine classification so nonlinear products remain residual,
 the frozen V13 corpus still accepts 40 and rejects 20 parameterized programs
 with zero maximum error among accepted cases.
 
-V12 provides the clearest paired boundary. Compact execution won 14 of 16 sparse
-application rows; the median advantage among those wins was 4.36x. Full replay
-won all seven dense rows, with a 3.44x median advantage. Traffic, dynamic queue,
-thermal, and branching families therefore support conditional transfer without
-supporting a universal speed claim.
+V12 provides the clearest paired boundary. Compact execution usually won on
+sparse application rows, while full replay won every tested dense row. Traffic,
+dynamic queue, thermal, and branching families therefore support conditional
+transfer without supporting a universal speed claim. Exact ratios and row
+counts remain in the evidence ledger and sanitized results.
 
 V13 evaluates external Montage workflow traces. The resident decision path won
-23 of 24 rows, with a 5.58x median advantage among wins. At the broader measured
-workflow boundary, 21 of 24 rows won, with a 4.43x median advantage among wins.
-The distinction matters: the first is resident-only and the second includes the
-measured end-to-end workflow costs.
+nearly every tested row, and the broader measured workflow boundary retained
+most of those wins. The distinction matters: the first is resident-only and the
+second includes the measured end-to-end workflow costs. These local benchmark
+ratios are preserved in the evidence ledger rather than used as the paper's
+headline.
 
 ![Cross-application evidence](../figures/application-evidence.png){width=64%}
 
@@ -103,23 +104,24 @@ measured end-to-end workflow costs.
 
 # 4. Negative results and disposition
 
-The broad V11 median was 1.82x slower than the strongest compiled-batch baseline even
-though five qualifying sparse rows produced a 2.32x median advantage. Cold JIT
-cost did not amortize through 10,000 tested decisions. Dense V12 rows favored
-full replay, and V13 contains no dense rows. Differential Dataflow, isolated
-reproduction, CUDA/Triton, and multi-GPU gates remain incomplete or deferred.
+The broad V11 result was slower than the strongest compiled-batch baseline even
+though a subset of qualifying sparse rows favored compact execution. Cold JIT
+cost did not amortize through the tested decision horizon. Dense V12 rows
+favored full replay, and V13 contains no dense rows. Differential Dataflow,
+isolated reproduction, CUDA/Triton, and multi-GPU gates remain incomplete or
+deferred.
 
 The V13 classifier also requires a strict label: it consumes realized closure
 after compact execution. It is a post-hoc locality classifier, not an
 operational pre-execution selector.
 
 Cross-project E2A evidence provides a second correction boundary. Case 14
-preserved semantics and compact branches but failed efficiency at 1.2122x
-executed work. Case 15 gave the conventional control equivalent dependency
-tracking, value stabilization, and adaptive propagation; executed work became
-equal at 1.0000x. Its lower inspection and branch-storage ratios remain bounded
-state-organization results, not proof of intrinsic acceleration. The public E2A
-archive preserves the correction and source boundaries.
+preserved semantics and compact branches but failed its efficiency gate.
+Case 15 gave the conventional control equivalent dependency tracking, value
+stabilization, and adaptive propagation; executed work became equal. Its lower
+inspection and branch-storage results remain bounded state-organization
+evidence, not proof of intrinsic acceleration. The public E2A archive preserves
+the exact correction and source boundaries.
 
 The evidence supports **state-aware computing** as a bounded method: share a
 resident baseline, recompute the complete affected closure, reconstruct only
@@ -146,5 +148,5 @@ Programming," *ACM TOPLAS*, 28(6), 2006.
 
 **Evidence boundary.** Aggregate local CPU results under declared workloads and
 timing boundaries. No raw logs, private paths, host identifiers, live systems,
-or accelerator-performance claims are included here. Executable evidence:
-[public SSPM workbench](https://github.com/bluetopazz/state-space-programming).
+or accelerator-performance claims are included. Evidence:
+[SSPM workbench](https://github.com/bluetopazz/state-space-programming).
