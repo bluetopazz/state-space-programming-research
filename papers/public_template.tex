@@ -1,0 +1,44 @@
+\documentclass[9pt]{extarticle}
+\usepackage[letterpaper,top=0.66in,bottom=0.64in,left=0.78in,right=0.78in]{geometry}
+\usepackage{fontspec}
+\IfFontExistsTF{Avenir Next}{\setmainfont{Avenir Next}}{\setmainfont{TeX Gyre Heros}}
+\IfFontExistsTF{Menlo}{\setmonofont{Menlo}[Scale=0.8]}{\setmonofont{DejaVu Sans Mono}[Scale=0.8]}
+\usepackage{amsmath,amssymb,graphicx,xcolor,microtype,fancyhdr,titlesec,enumitem,float}
+\usepackage{hyperref,bookmark}
+\definecolor{paper}{HTML}{F5EFE1}
+\definecolor{graphite}{HTML}{1E1E1C}
+\definecolor{midgray}{HTML}{666660}
+\definecolor{signal}{HTML}{FF5A1F}
+\pagecolor{paper}\color{graphite}
+\hypersetup{colorlinks=true,linkcolor=signal,urlcolor=midgray,pdfborder={0 0 0},
+  pdftitle={$title$},pdfauthor={$author$}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\ttfamily SSPM / PUBLIC RESEARCH NOTE}
+\fancyhead[R]{\small\ttfamily RONNIE'S LAB / 2026}
+\fancyfoot[L]{\textcolor{signal}{\rule{14pt}{2.5pt}}}
+\fancyfoot[R]{\small\ttfamily\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small\ttfamily SSPM / PUBLIC RESEARCH NOTE}
+  \fancyhead[R]{\small\ttfamily RONNIE'S LAB / 2026}
+  \fancyfoot[L]{\textcolor{signal}{\rule{14pt}{2.5pt}}}
+  \fancyfoot[R]{\small\ttfamily\thepage}
+  \renewcommand{\headrulewidth}{0.3pt}
+}
+\titleformat{\section}{\Large\bfseries}{}{0pt}{}[\vspace{-3pt}\textcolor{midgray}{\titlerule}]
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.28em}
+\setlength{\emergencystretch}{2em}
+\setlist{nosep,leftmargin=1.35em}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\floatplacement{figure}{H}
+\begin{document}
+{\small\ttfamily PUBLIC ARCHIVE / VERSION 3.1 / CORRECTED INTERPRETATION}\par\vspace{0.65em}
+{\Huge\bfseries $title$}\par\vspace{0.35em}
+{\Large $subtitle$}\par\vspace{0.65em}
+\textcolor{signal}{\rule{30pt}{4pt}}\par\vspace{0.65em}
+{\small $author$ / $date$ / NOT PEER REVIEWED}\par\vspace{0.8em}
+$body$
+\end{document}

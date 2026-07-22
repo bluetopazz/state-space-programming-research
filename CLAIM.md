@@ -5,9 +5,11 @@
 SSPM is a restricted state-transition runtime that shares resident state across
 repeated local interventions, propagates complete declared dependency closures,
 and falls back to full replay when locality disappears. Under its declared
-semantics, incremental execution is from-scratch consistent; across multiple
-application families, sparse closures often reduce CPU decision cost while
-dense, cold, and materialization-heavy regimes do not.
+semantics, incremental execution is from-scratch consistent. Explicit state
+representation does not inherently or uniquely make computation faster.
+Measured gains are conditional on locality, demanded outputs, resident-baseline
+reuse, and implementation boundaries; equally capable conventional systems can
+perform the same adaptive transition work.
 
 ## Transition model
 
@@ -52,6 +54,8 @@ otherwise shared system. SSPM makes that relationship explicit: keep the
 baseline state resident, edit the target, compute the complete affected region,
 and reuse everything outside it. The runtime can therefore avoid recomputing
 unaffected work while retaining a correctness-preserving full-replay path.
+That avoided work is an incremental-computation mechanism, not a capability
+exclusive to SSPM or to state-space representation.
 
 ## Governed state projections
 
@@ -72,6 +76,8 @@ theorem. See [Governed Operational State and Safe Reuse](research/GOVERNED_OPERA
 
 - SSPM does not model arbitrary systems as globally linear transformations.
 - Resident state alone does not guarantee faster execution.
+- Equivalent conventional dependency tracking and adaptive propagation can
+  eliminate the executed-work distinction.
 - Sparse results do not imply dense wins.
 - The post-hoc V13 classifier is not an operational selector.
 - Differential tests support bounded consistency; they are not universal

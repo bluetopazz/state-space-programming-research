@@ -1,6 +1,7 @@
 # SSPM: State-Aware Computing
 
-**A public research archive for exact local reuse across repeated system interventions.**
+**A public research archive for exact modeled reuse, compact counterfactuals,
+and explicit locality boundaries.**
 
 State-Space Programming Methodology (SSPM) is a restricted state-transition
 runtime. It keeps one declared system state resident, applies a local edit,
@@ -10,9 +11,9 @@ replay when locality disappears.
 > SSPM is a restricted state-transition runtime that shares resident state
 > across repeated local interventions, propagates complete declared dependency
 > closures, and falls back to full replay when locality disappears. Under its
-> declared semantics, incremental execution is from-scratch consistent; across
-> multiple application families, sparse closures often reduce CPU decision cost
-> while dense, cold, and materialization-heavy regimes do not.
+> declared semantics, incremental execution is from-scratch consistent. Explicit
+> state representation is not inherently or uniquely faster: measured gains
+> depend on locality, output demand, baseline reuse, and implementation boundaries.
 
 The research contribution is not a claim that every system is linear or that
 incremental execution always wins. It is a bounded execution model for repeated
@@ -42,10 +43,11 @@ as affine ones; it does not require global linearity.
 
 - Exact reuse held under the declared state and dependency semantics in the
   tested traffic, queue, thermal, and workflow families.
-- Sparse V12 application rows won 14 of 16 comparisons, with a 4.36x median
-  compact-to-full advantage among winning rows.
-- V13 workflow experiments produced a 4.43x median end-to-end advantage across
-  the 21 of 24 rows where the complete workflow won.
+- Compact branching and selective materialization reduced measured cost in
+  bounded sparse V12 and V13 rows; the ratios remain in the evidence ledger.
+- A fair E2A control reproduced the same adaptive transition work at a 1.0000
+  executed-work ratio, rejecting an intrinsic representation-speed reading.
+  See the [E2A correction](https://github.com/bluetopazz/electrons-to-agents-research/blob/main/CORRECTION.md).
 - Dense, cold-compilation, materialization-heavy, and several external-backend
   regimes did not support a general speed claim.
 - The V13 locality classifier is post-hoc: it uses realized closure after
@@ -80,7 +82,7 @@ history.
 
 ## Status
 
-Public research archive, version 3.0, July 2026. Results are local to the
+Public research archive, version 3.1, July 2026. Results are local to the
 declared CPU environments and workload boundaries. Differential Dataflow,
 isolated reproduction, CUDA/Triton, dense V13 coverage, and cold-compilation
 gates remain failed, deferred, or incomplete as documented.

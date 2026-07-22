@@ -14,3 +14,7 @@ v13_workflow_wins,v13,workflow_traces,sparse,end_to_end_winning_rows,21,of_24,en
 v13_workflow_speed,v13,workflow_traces,sparse,median_speedup_among_wins,4.43,ratio,end_to_end_workflow,supported_local,End-to-end timing distinct from resident-only result
 v13_dense_coverage,v13,workflow_traces,dense,measured_rows,0,count,end_to_end_workflow,unmeasured,No dense rows in frozen external trace set
 v13_selector,v13,workflow_traces,sparse,preexecution_operational_selector,0,boolean,post_hoc_analysis,rejected_operational,Classifier consumes realized closure after compact execution
+e2a_case14,e2a_case14,cross_project_control,mixed,executed_work_ratio,1.2122,ratio,fair_control,rejected_efficiency,Semantic pass and compact branching retained but the efficiency gate failed
+e2a_case15,e2a_case15,cross_project_control,mixed,executed_work_ratio,1.0000,ratio,equal_adaptive_propagation,rejected_intrinsic_causality,Conventional control received equivalent dependencies value stabilization and adaptive propagation
+e2a_case15_inspection,e2a_case15,cross_project_control,mixed,inspection_ratio,0.1534,ratio,equal_adaptive_propagation,supported_bounded,Implementation-specific validation difference after work parity
+e2a_case15_storage,e2a_case15,cross_project_control,mixed,branch_storage_ratio,0.0525,ratio,equal_adaptive_propagation,supported_bounded,Implementation-specific compact branch storage after work parity

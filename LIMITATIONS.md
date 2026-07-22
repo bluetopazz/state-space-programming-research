@@ -19,6 +19,12 @@ Reported ratios are local and conditional. The 5.58x V13 figure is a resident
 decision-path result; the 4.43x figure includes the measured end-to-end workflow
 boundary. Neither is a universal application speedup.
 
+They are also not evidence that state representation itself causes speed. E2A
+Case 15 reached executed-work parity after an equally adaptive conventional
+control received the same dependency and propagation capabilities. SSPM may
+still differ in branch storage, inspection, validation, or materialization, but
+those mechanisms must be measured separately from transition work.
+
 ## Selection boundary
 
 V13's classifier uses realized closure after compact execution. It is a post-hoc

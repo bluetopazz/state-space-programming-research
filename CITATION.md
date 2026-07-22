@@ -3,7 +3,7 @@
 ## Suggested citation
 
 Mack, Ronnie. *State-Aware Computing: Exact Local Reuse for Repeated System
-Intervention*. Ronnie's Lab, public research archive version 3.0, July 2026.
+Intervention*. Ronnie's Lab, public research archive version 3.1, July 2026.
 https://github.com/bluetopazz/state-space-programming-research/blob/main/papers/state-aware-computing.pdf
 
 ## BibTeX
@@ -16,7 +16,7 @@ https://github.com/bluetopazz/state-space-programming-research/blob/main/papers/
   month        = {July},
   publisher    = {Ronnie's Lab},
   url          = {https://github.com/bluetopazz/state-space-programming-research/blob/main/papers/state-aware-computing.pdf},
-  note         = {Public research archive, version 3.0}
+  note         = {Public research archive, version 3.1, corrected causal interpretation}
 }
 ~~~
 

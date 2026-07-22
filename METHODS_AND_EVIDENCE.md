@@ -54,6 +54,16 @@ resident decision path won 23 of 24 rows at a 5.58x median among wins. Including
 the measured workflow boundary, 21 of 24 rows won at a 4.43x median among wins.
 Those are different timing claims and are reported separately.
 
+These measurements do not isolate explicit state representation as their
+cause. In the separate E2A fair-control sequence, Case 14 failed its efficiency
+gate at 1.2122x executed work. Case 15 then gave the conventional control
+equivalent dependencies, value stabilization, and adaptive propagation;
+executed work reached 1.0000x parity. SSPM's remaining empirical question is
+when its explicit baseline, compact branch, validation, and materialization
+organization lowers total cost under a declared workload boundary.
+The source sequence is preserved in the
+[E2A correction](https://github.com/bluetopazz/electrons-to-agents-research/blob/main/CORRECTION.md).
+
 ## Negative and deferred evidence
 
 The broad V11 median was slower than the strongest compiled-batch baseline, cold JIT
