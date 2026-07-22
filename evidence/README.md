@@ -10,5 +10,6 @@ Resident-only and end-to-end workflow figures are intentionally separate.
 Cross-project E2A rows preserve the fair-control counterevidence and are not
 SSPM performance measurements.
 
-The executable source of record is:
-<https://github.com/bluetopazz/state-space-programming>
+The executable source of record remains private. This directory provides the
+sanitized aggregate evidence needed to audit the public claims without exposing
+raw operational artifacts or implying public code reproducibility.

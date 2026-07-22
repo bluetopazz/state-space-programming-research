@@ -19,4 +19,4 @@
 | Differential Dataflow and isolated reproduction are complete | V13 external/reproduction records | Gate audit | Failed or incomplete; preserved explicitly |
 
 Raw measurements, host fields, machine paths, and operational details remain in
-the executable source of record and are not duplicated here.
+the private executable source of record and are not duplicated here.

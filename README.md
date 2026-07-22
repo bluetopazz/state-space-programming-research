@@ -37,7 +37,7 @@ as affine ones; it does not require global linearity.
 - [Claim-by-claim evidence ledger](EVIDENCE_LEDGER.md)
 - [Limitations and open work](LIMITATIONS.md)
 - [Sanitized aggregate evidence](evidence/public_results.csv)
-- [Executable research workbench](https://github.com/bluetopazz/state-space-programming)
+- Executable research workbench: private implementation source of record
 
 ## Evidence in one view
 
@@ -76,9 +76,11 @@ or security result.
 This repository is a code-free research surface. It contains writing, figures,
 and sanitized aggregates, but no research implementation, raw timing logs,
 private paths, host identifiers, credentials, or operational infrastructure.
-The executable workbench is public separately and is the source of record for
-tests, manifests, checksums, raw evidence, failed gates, and implementation
-history.
+The executable workbench remains private and is the source of record for tests,
+manifests, checksums, raw evidence, failed gates, and implementation history.
+This archive publishes the claim boundary, papers, figures, and sanitized
+aggregate evidence without representing the implementation as reproducible
+public code.
 
 ## Status
 
